@@ -1,7 +1,7 @@
 .PHONY: doc
 
 doc:
-	python3 -m pydoc -w src/ && mv *.html doc
+	pdoc -o ./doc src/datareader
 
 lint: 
 	sh .ci/lint.sh

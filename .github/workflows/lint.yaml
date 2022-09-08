@@ -1,0 +1,31 @@
+---
+name: lint
+
+on: [push, pull_request]
+
+jobs:
+  isort-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - uses: jamescurtin/isort-action@master
+  black-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: psf/black@stable
+        with:
+          options: "-l79"
+  yamllint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: karancode/yamllint-github-action@master
+  flake8:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          sudo apt-get install -y flake8
+          flake8 . --count --show-source --statistics --config=.flake8.cfg

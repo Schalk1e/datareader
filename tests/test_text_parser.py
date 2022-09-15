@@ -1,6 +1,6 @@
 from test_cases.text_parser_cases import TextTestCases
 
-from datareader.text_parser import TextParser
+from datareader.parser import text_parser
 
 
 def test_to_dataframe():
@@ -9,7 +9,7 @@ def test_to_dataframe():
     ).to_dataframe_cases()
     for case, result in zip(test_cases["cases"], test_cases["results"]):
         assert (
-            TextParser(case)
+            text_parser.TextParser(case)
             .to_dataframe("|", 3)
             .astype(str)
             .equals(result.astype(str))

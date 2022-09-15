@@ -1,6 +1,6 @@
 from test_cases.sql_parser_cases import ParserTestCases
 
-from datareader.sql_parser import SQLParser
+from datareader.parser import sql_parser
 
 
 def test_to_dataframe():
@@ -9,7 +9,7 @@ def test_to_dataframe():
     ).to_dataframe_cases()
     for case, result in zip(test_cases["cases"], test_cases["results"]):
         assert (
-            SQLParser(case)
+            sql_parser.SQLParser(case)
             .to_dataframe()
             .astype(str)
             .equals(result.astype(str))

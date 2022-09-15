@@ -4,7 +4,11 @@ from test_cases.sql_parser_cases import (
     split_list_cases,
 )
 
-from datareader.sql_parser import extract_bracket, first_words, split_list
+from datareader.parser.sql_parser import (
+    extract_bracket,
+    first_words,
+    split_list,
+)
 
 
 def test_extract_bracket():

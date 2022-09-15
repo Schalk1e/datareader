@@ -10,5 +10,5 @@ setup(
     packages=find_packages("src"),
     package_dir={"": "src"},
     python_requires=">=3.7",
-    install_requires=["pandas"],
+    install_requires=["pandas", "sqlalchemy"],
 )

@@ -17,7 +17,10 @@ def extract_bracket(input_string: str) -> str:
     """
     if input_string == "":
         return input_string
-    return re.search("\((.*)\)", input_string).group(1)
+    match_object = re.search("\((.*)\)", input_string)
+    if match_object:
+        return match_object.group(1)
+    return ""
 
 
 def split_list(input_string: list, n: int) -> list:
@@ -67,13 +70,14 @@ class SQLParser(Parser):
         Returns:
             A Pandas DataFrame.
         """
+        # add unique constraint option.
         tbl = []
         q = " ".join([x.strip("\n") for x in self._file]).split(";")
         for x in q:
             b = extract_bracket(x).replace("(", "").replace(")", "")
             if b != "":
                 to_append = b.strip().split(",")
-                tbl.append([y for y in to_append if y != ""])
+                tbl.append([y.strip() for y in to_append if y != ""])
         if len(tbl) == 2:
             tbl = [tbl[0]] + split_list(tbl[1], len(tbl[0]))
         cols = first_words(tbl[0])

@@ -21,7 +21,7 @@ then
     exit 1
 fi
 
-lint src
+lint src tests
 result=$?
 
 if [ $result = 0 ]; then
@@ -32,7 +32,7 @@ else
     read user_prompt
     if [ $user_prompt = Y ]; then
         echo "Reformatting..."
-        fmt src
+        fmt src tests
     fi
 fi
 

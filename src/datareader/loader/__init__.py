@@ -32,7 +32,7 @@ except KeyError as e:
     )
     HOST = "localhost"
 
-if not all(USER, PASSWORD, DATABASE):
+if not all([USER, PASSWORD, DATABASE]):
     raise ConfigMissingError(
         "A configuration parameter is missing from the environment (Database user, password or db name). Please ensure these are defined!"
     )

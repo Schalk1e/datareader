@@ -1,3 +1,5 @@
+include .venv/env
+
 .PHONY: doc
 
 doc:

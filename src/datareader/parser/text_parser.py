@@ -6,7 +6,7 @@ from . import Parser
 
 
 class TextParser(Parser):
-    def __init__(self, path: os.PathLike):
+    def __init__(self, path: os.PathLike) -> None:
         with open(path, "r") as f:
             self._file = f.readlines()
 

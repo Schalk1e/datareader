@@ -134,11 +134,11 @@
 </span><span id="L-60"><a href="#L-60"><span class="linenos">60</span></a>
 </span><span id="L-61"><a href="#L-61"><span class="linenos">61</span></a>
 </span><span id="L-62"><a href="#L-62"><span class="linenos">62</span></a><span class="k">class</span> <span class="nc">SQLParser</span><span class="p">(</span><span class="n">Parser</span><span class="p">):</span>
-</span><span id="L-63"><a href="#L-63"><span class="linenos">63</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">PathLike</span><span class="p">):</span>
+</span><span id="L-63"><a href="#L-63"><span class="linenos">63</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">PathLike</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 </span><span id="L-64"><a href="#L-64"><span class="linenos">64</span></a>        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
 </span><span id="L-65"><a href="#L-65"><span class="linenos">65</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_file</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
 </span><span id="L-66"><a href="#L-66"><span class="linenos">66</span></a>
-</span><span id="L-67"><a href="#L-67"><span class="linenos">67</span></a>    <span class="k">def</span> <span class="nf">to_dataframe</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="L-67"><a href="#L-67"><span class="linenos">67</span></a>    <span class="k">def</span> <span class="nf">to_dataframe</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
 </span><span id="L-68"><a href="#L-68"><span class="linenos">68</span></a>        <span class="sd">&quot;&quot;&quot;Parses input SQL Create and Insert statements and constructs a Pandas DataFrame.</span>
 </span><span id="L-69"><a href="#L-69"><span class="linenos">69</span></a>
 </span><span id="L-70"><a href="#L-70"><span class="linenos">70</span></a><span class="sd">        Returns:</span>
@@ -296,11 +296,11 @@
     </div>
     <a class="headerlink" href="#SQLParser"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="SQLParser-63"><a href="#SQLParser-63"><span class="linenos">63</span></a><span class="k">class</span> <span class="nc">SQLParser</span><span class="p">(</span><span class="n">Parser</span><span class="p">):</span>
-</span><span id="SQLParser-64"><a href="#SQLParser-64"><span class="linenos">64</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">PathLike</span><span class="p">):</span>
+</span><span id="SQLParser-64"><a href="#SQLParser-64"><span class="linenos">64</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">PathLike</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 </span><span id="SQLParser-65"><a href="#SQLParser-65"><span class="linenos">65</span></a>        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
 </span><span id="SQLParser-66"><a href="#SQLParser-66"><span class="linenos">66</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_file</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
 </span><span id="SQLParser-67"><a href="#SQLParser-67"><span class="linenos">67</span></a>
-</span><span id="SQLParser-68"><a href="#SQLParser-68"><span class="linenos">68</span></a>    <span class="k">def</span> <span class="nf">to_dataframe</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="SQLParser-68"><a href="#SQLParser-68"><span class="linenos">68</span></a>    <span class="k">def</span> <span class="nf">to_dataframe</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
 </span><span id="SQLParser-69"><a href="#SQLParser-69"><span class="linenos">69</span></a>        <span class="sd">&quot;&quot;&quot;Parses input SQL Create and Insert statements and constructs a Pandas DataFrame.</span>
 </span><span id="SQLParser-70"><a href="#SQLParser-70"><span class="linenos">70</span></a>
 </span><span id="SQLParser-71"><a href="#SQLParser-71"><span class="linenos">71</span></a><span class="sd">        Returns:</span>
@@ -337,7 +337,7 @@ inheritance.</p>
 
     </div>
     <a class="headerlink" href="#SQLParser.__init__"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="SQLParser.__init__-64"><a href="#SQLParser.__init__-64"><span class="linenos">64</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">PathLike</span><span class="p">):</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="SQLParser.__init__-64"><a href="#SQLParser.__init__-64"><span class="linenos">64</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">PathLike</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 </span><span id="SQLParser.__init__-65"><a href="#SQLParser.__init__-65"><span class="linenos">65</span></a>        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
 </span><span id="SQLParser.__init__-66"><a href="#SQLParser.__init__-66"><span class="linenos">66</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_file</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
 </span></pre></div>
@@ -351,13 +351,13 @@ inheritance.</p>
 <div class="attr function">
             
         <span class="def">def</span>
-        <span class="name">to_dataframe</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span></span><span class="return-annotation">):</span></span>
+        <span class="name">to_dataframe</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span></span><span class="return-annotation">) -> <span class="n">pandas</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">DataFrame</span>:</span></span>
 
                 <label class="view-source-button" for="SQLParser.to_dataframe-view-source"><span>View Source</span></label>
 
     </div>
     <a class="headerlink" href="#SQLParser.to_dataframe"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="SQLParser.to_dataframe-68"><a href="#SQLParser.to_dataframe-68"><span class="linenos">68</span></a>    <span class="k">def</span> <span class="nf">to_dataframe</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="SQLParser.to_dataframe-68"><a href="#SQLParser.to_dataframe-68"><span class="linenos">68</span></a>    <span class="k">def</span> <span class="nf">to_dataframe</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
 </span><span id="SQLParser.to_dataframe-69"><a href="#SQLParser.to_dataframe-69"><span class="linenos">69</span></a>        <span class="sd">&quot;&quot;&quot;Parses input SQL Create and Insert statements and constructs a Pandas DataFrame.</span>
 </span><span id="SQLParser.to_dataframe-70"><a href="#SQLParser.to_dataframe-70"><span class="linenos">70</span></a>
 </span><span id="SQLParser.to_dataframe-71"><a href="#SQLParser.to_dataframe-71"><span class="linenos">71</span></a><span class="sd">        Returns:</span>

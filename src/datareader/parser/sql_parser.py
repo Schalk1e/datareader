@@ -60,11 +60,11 @@ def first_words(input_list: list) -> list:
 
 
 class SQLParser(Parser):
-    def __init__(self, path: os.PathLike):
+    def __init__(self, path: os.PathLike) -> None:
         with open(path, "r") as f:
             self._file = f.readlines()
 
-    def to_dataframe(self):
+    def to_dataframe(self) -> pd.DataFrame:
         """Parses input SQL Create and Insert statements and constructs a Pandas DataFrame.
 
         Returns:

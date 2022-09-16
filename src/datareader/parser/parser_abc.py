@@ -6,7 +6,7 @@ import pandas as pd
 
 class Parser(ABC):
     @abstractmethod
-    def __init__(self, infile: os.PathLike):
+    def __init__(self, infile: os.PathLike) -> None:
         pass
 
     @abstractmethod

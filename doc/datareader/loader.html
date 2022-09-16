@@ -27,6 +27,36 @@
                    pattern=".+" required>
 
 
+        <h2>Submodules</h2>
+        <ul>
+                <li><a href="loader/loader.html">loader</a></li>
+                <li><a href="loader/main.html">main</a></li>
+        </ul>
+
+        <h2>API Documentation</h2>
+            <ul class="memberlist">
+            <li>
+                    <a class="class" href="#ConfigMissingError">ConfigMissingError</a>
+                            <ul class="memberlist">
+                </ul>
+
+            </li>
+            <li>
+                    <a class="class" href="#BaseLoader">BaseLoader</a>
+                            <ul class="memberlist">
+                        <li>
+                                <a class="function" href="#BaseLoader.__init__">BaseLoader</a>
+                        </li>
+                        <li>
+                                <a class="function" href="#BaseLoader.engine">engine</a>
+                        </li>
+                </ul>
+
+            </li>
+            <li>
+                    <a class="variable" href="#base_loader">base_loader</a>
+            </li>
+    </ul>
 
 
 
@@ -43,10 +73,177 @@
 <a href="./../datareader.html">datareader</a><wbr>.loader    </h1>
 
                 
-                
-                
-                
+                        <input id="loader-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+
+                        <label class="view-source-button" for="loader-view-source"><span>View Source</span></label>
+
+                        <div class="pdoc-code codehilite"><pre><span></span><span id="L-1"><a href="#L-1"><span class="linenos"> 1</span></a><span class="kn">import</span> <span class="nn">os</span>
+</span><span id="L-2"><a href="#L-2"><span class="linenos"> 2</span></a>
+</span><span id="L-3"><a href="#L-3"><span class="linenos"> 3</span></a><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">create_engine</span>
+</span><span id="L-4"><a href="#L-4"><span class="linenos"> 4</span></a>
+</span><span id="L-5"><a href="#L-5"><span class="linenos"> 5</span></a>
+</span><span id="L-6"><a href="#L-6"><span class="linenos"> 6</span></a><span class="k">class</span> <span class="nc">ConfigMissingError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+</span><span id="L-7"><a href="#L-7"><span class="linenos"> 7</span></a>    <span class="k">pass</span>
+</span><span id="L-8"><a href="#L-8"><span class="linenos"> 8</span></a>
+</span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a>
+</span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a><span class="k">try</span><span class="p">:</span>
+</span><span id="L-11"><a href="#L-11"><span class="linenos">11</span></a>    <span class="n">USER</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;DATAREADER_DB_USERNAME&quot;</span><span class="p">]</span>
+</span><span id="L-12"><a href="#L-12"><span class="linenos">12</span></a>    <span class="n">PASSWORD</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;DATAREADER_DB_PASSWORD&quot;</span><span class="p">]</span>
+</span><span id="L-13"><a href="#L-13"><span class="linenos">13</span></a>    <span class="n">DATABASE</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;DATAREADER_DB_NAME&quot;</span><span class="p">]</span>
+</span><span id="L-14"><a href="#L-14"><span class="linenos">14</span></a><span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+</span><span id="L-15"><a href="#L-15"><span class="linenos">15</span></a>    <span class="k">raise</span> <span class="n">ConfigMissingError</span><span class="p">(</span>
+</span><span id="L-16"><a href="#L-16"><span class="linenos">16</span></a>        <span class="s2">&quot;A configuration parameter is missing from the environment (Database user, password or db name). Please ensure these are defined!&quot;</span>
+</span><span id="L-17"><a href="#L-17"><span class="linenos">17</span></a>    <span class="p">)</span>
+</span><span id="L-18"><a href="#L-18"><span class="linenos">18</span></a>
+</span><span id="L-19"><a href="#L-19"><span class="linenos">19</span></a><span class="k">try</span><span class="p">:</span>
+</span><span id="L-20"><a href="#L-20"><span class="linenos">20</span></a>    <span class="n">PORT</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;DATAREADER_DB_PORT&quot;</span><span class="p">]</span>
+</span><span id="L-21"><a href="#L-21"><span class="linenos">21</span></a><span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+</span><span id="L-22"><a href="#L-22"><span class="linenos">22</span></a>    <span class="nb">print</span><span class="p">(</span>
+</span><span id="L-23"><a href="#L-23"><span class="linenos">23</span></a>        <span class="s2">&quot;Setting port to default pgsql port 5432. If this is not the correct port, add DATAREADER_DB_PORT to the environment variables.&quot;</span>
+</span><span id="L-24"><a href="#L-24"><span class="linenos">24</span></a>    <span class="p">)</span>
+</span><span id="L-25"><a href="#L-25"><span class="linenos">25</span></a>    <span class="n">PORT</span> <span class="o">=</span> <span class="mi">5432</span>
+</span><span id="L-26"><a href="#L-26"><span class="linenos">26</span></a>
+</span><span id="L-27"><a href="#L-27"><span class="linenos">27</span></a><span class="k">try</span><span class="p">:</span>
+</span><span id="L-28"><a href="#L-28"><span class="linenos">28</span></a>    <span class="n">HOST</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;DATAREADER_DB_HOST&quot;</span><span class="p">]</span>
+</span><span id="L-29"><a href="#L-29"><span class="linenos">29</span></a><span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+</span><span id="L-30"><a href="#L-30"><span class="linenos">30</span></a>    <span class="nb">print</span><span class="p">(</span>
+</span><span id="L-31"><a href="#L-31"><span class="linenos">31</span></a>        <span class="s2">&quot;Setting host to localhost. If this is not the correct host, add DATAREADER_DB_HOST to the environment variables.&quot;</span>
+</span><span id="L-32"><a href="#L-32"><span class="linenos">32</span></a>    <span class="p">)</span>
+</span><span id="L-33"><a href="#L-33"><span class="linenos">33</span></a>    <span class="n">HOST</span> <span class="o">=</span> <span class="s2">&quot;localhost&quot;</span>
+</span><span id="L-34"><a href="#L-34"><span class="linenos">34</span></a>
+</span><span id="L-35"><a href="#L-35"><span class="linenos">35</span></a><span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">([</span><span class="n">USER</span><span class="p">,</span> <span class="n">PASSWORD</span><span class="p">,</span> <span class="n">DATABASE</span><span class="p">]):</span>
+</span><span id="L-36"><a href="#L-36"><span class="linenos">36</span></a>    <span class="k">raise</span> <span class="n">ConfigMissingError</span><span class="p">(</span>
+</span><span id="L-37"><a href="#L-37"><span class="linenos">37</span></a>        <span class="s2">&quot;A configuration parameter is missing from the environment (Database user, password or db name). Please ensure these are defined!&quot;</span>
+</span><span id="L-38"><a href="#L-38"><span class="linenos">38</span></a>    <span class="p">)</span>
+</span><span id="L-39"><a href="#L-39"><span class="linenos">39</span></a>
+</span><span id="L-40"><a href="#L-40"><span class="linenos">40</span></a>
+</span><span id="L-41"><a href="#L-41"><span class="linenos">41</span></a><span class="k">class</span> <span class="nc">BaseLoader</span><span class="p">:</span>
+</span><span id="L-42"><a href="#L-42"><span class="linenos">42</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">host</span><span class="p">,</span> <span class="n">database</span><span class="p">,</span> <span class="n">port</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="L-43"><a href="#L-43"><span class="linenos">43</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_connect_str</span> <span class="o">=</span> <span class="p">(</span>
+</span><span id="L-44"><a href="#L-44"><span class="linenos">44</span></a>            <span class="sa">f</span><span class="s2">&quot;postgresql://</span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">password</span><span class="si">}</span><span class="s2">@</span><span class="si">{</span><span class="n">host</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">port</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">database</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span id="L-45"><a href="#L-45"><span class="linenos">45</span></a>        <span class="p">)</span>
+</span><span id="L-46"><a href="#L-46"><span class="linenos">46</span></a>
+</span><span id="L-47"><a href="#L-47"><span class="linenos">47</span></a>    <span class="k">def</span> <span class="nf">engine</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="L-48"><a href="#L-48"><span class="linenos">48</span></a>        <span class="k">return</span> <span class="n">create_engine</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_connect_str</span><span class="p">)</span>
+</span><span id="L-49"><a href="#L-49"><span class="linenos">49</span></a>
+</span><span id="L-50"><a href="#L-50"><span class="linenos">50</span></a>
+</span><span id="L-51"><a href="#L-51"><span class="linenos">51</span></a><span class="n">base_loader</span> <span class="o">=</span> <span class="n">BaseLoader</span><span class="p">(</span><span class="n">USER</span><span class="p">,</span> <span class="n">PASSWORD</span><span class="p">,</span> <span class="n">HOST</span><span class="p">,</span> <span class="n">DATABASE</span><span class="p">,</span> <span class="n">PORT</span><span class="p">)</span>
+</span><span id="L-52"><a href="#L-52"><span class="linenos">52</span></a>
+</span><span id="L-53"><a href="#L-53"><span class="linenos">53</span></a><span class="kn">from</span> <span class="nn">.main</span> <span class="kn">import</span> <span class="n">TableLoader</span>
+</span></pre></div>
+
+
             </section>
+                <section id="ConfigMissingError">
+                            <input id="ConfigMissingError-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr class">
+            
+    <span class="def">class</span>
+    <span class="name">ConfigMissingError</span><wbr>(<span class="base">builtins.Exception</span>):
+
+                <label class="view-source-button" for="ConfigMissingError-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#ConfigMissingError"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="ConfigMissingError-7"><a href="#ConfigMissingError-7"><span class="linenos">7</span></a><span class="k">class</span> <span class="nc">ConfigMissingError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+</span><span id="ConfigMissingError-8"><a href="#ConfigMissingError-8"><span class="linenos">8</span></a>    <span class="k">pass</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>Common base class for all non-exit exceptions.</p>
+</div>
+
+
+                            <div class="inherited">
+                                <h5>Inherited Members</h5>
+                                <dl>
+                                    <div><dt>builtins.Exception</dt>
+                                <dd id="ConfigMissingError.__init__" class="function">Exception</dd>
+
+            </div>
+            <div><dt>builtins.BaseException</dt>
+                                <dd id="ConfigMissingError.with_traceback" class="function">with_traceback</dd>
+                <dd id="ConfigMissingError.args" class="variable">args</dd>
+
+            </div>
+                                </dl>
+                            </div>
+                </section>
+                <section id="BaseLoader">
+                            <input id="BaseLoader-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr class">
+            
+    <span class="def">class</span>
+    <span class="name">BaseLoader</span>:
+
+                <label class="view-source-button" for="BaseLoader-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#BaseLoader"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="BaseLoader-42"><a href="#BaseLoader-42"><span class="linenos">42</span></a><span class="k">class</span> <span class="nc">BaseLoader</span><span class="p">:</span>
+</span><span id="BaseLoader-43"><a href="#BaseLoader-43"><span class="linenos">43</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">host</span><span class="p">,</span> <span class="n">database</span><span class="p">,</span> <span class="n">port</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="BaseLoader-44"><a href="#BaseLoader-44"><span class="linenos">44</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_connect_str</span> <span class="o">=</span> <span class="p">(</span>
+</span><span id="BaseLoader-45"><a href="#BaseLoader-45"><span class="linenos">45</span></a>            <span class="sa">f</span><span class="s2">&quot;postgresql://</span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">password</span><span class="si">}</span><span class="s2">@</span><span class="si">{</span><span class="n">host</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">port</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">database</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span id="BaseLoader-46"><a href="#BaseLoader-46"><span class="linenos">46</span></a>        <span class="p">)</span>
+</span><span id="BaseLoader-47"><a href="#BaseLoader-47"><span class="linenos">47</span></a>
+</span><span id="BaseLoader-48"><a href="#BaseLoader-48"><span class="linenos">48</span></a>    <span class="k">def</span> <span class="nf">engine</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="BaseLoader-49"><a href="#BaseLoader-49"><span class="linenos">49</span></a>        <span class="k">return</span> <span class="n">create_engine</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_connect_str</span><span class="p">)</span>
+</span></pre></div>
+
+
+    
+
+                            <div id="BaseLoader.__init__" class="classattr">
+                                        <input id="BaseLoader.__init__-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="name">BaseLoader</span><span class="signature pdoc-code condensed">(<span class="param"><span class="n">user</span>, </span><span class="param"><span class="n">password</span>, </span><span class="param"><span class="n">host</span>, </span><span class="param"><span class="n">database</span>, </span><span class="param"><span class="n">port</span></span>)</span>
+
+                <label class="view-source-button" for="BaseLoader.__init__-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#BaseLoader.__init__"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="BaseLoader.__init__-43"><a href="#BaseLoader.__init__-43"><span class="linenos">43</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">host</span><span class="p">,</span> <span class="n">database</span><span class="p">,</span> <span class="n">port</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="BaseLoader.__init__-44"><a href="#BaseLoader.__init__-44"><span class="linenos">44</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_connect_str</span> <span class="o">=</span> <span class="p">(</span>
+</span><span id="BaseLoader.__init__-45"><a href="#BaseLoader.__init__-45"><span class="linenos">45</span></a>            <span class="sa">f</span><span class="s2">&quot;postgresql://</span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">password</span><span class="si">}</span><span class="s2">@</span><span class="si">{</span><span class="n">host</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">port</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">database</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span id="BaseLoader.__init__-46"><a href="#BaseLoader.__init__-46"><span class="linenos">46</span></a>        <span class="p">)</span>
+</span></pre></div>
+
+
+    
+
+                            </div>
+                            <div id="BaseLoader.engine" class="classattr">
+                                        <input id="BaseLoader.engine-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">engine</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span></span><span class="return-annotation">):</span></span>
+
+                <label class="view-source-button" for="BaseLoader.engine-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#BaseLoader.engine"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="BaseLoader.engine-48"><a href="#BaseLoader.engine-48"><span class="linenos">48</span></a>    <span class="k">def</span> <span class="nf">engine</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="BaseLoader.engine-49"><a href="#BaseLoader.engine-49"><span class="linenos">49</span></a>        <span class="k">return</span> <span class="n">create_engine</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_connect_str</span><span class="p">)</span>
+</span></pre></div>
+
+
+    
+
+                            </div>
+                </section>
+                <section id="base_loader">
+                    <div class="attr variable">
+            <span class="name">base_loader</span><span class="default_value"> = &lt;<a href="#BaseLoader">datareader.loader.BaseLoader</a> object&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#base_loader"></a>
+    
+    
+
+                </section>
     </main>
 <script>
     function escapeHTML(html) {

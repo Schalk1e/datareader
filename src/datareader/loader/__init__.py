@@ -41,13 +41,13 @@ if not all([USER, PASSWORD, DATABASE]):
 class BaseLoader:
     def __init__(self, user, password, host, database, port) -> None:
         self._connect_str = (
-            f"postgresq;://{user}:{password}@{host}@{port}/{database}"
+            f"postgresql://{user}:{password}@{host}:{port}/{database}"
         )
 
     def engine(self):
         return create_engine(self._connect_str)
 
 
-loader = BaseLoader(USER, PASSWORD, HOST, DATABASE, PORT)
+base_loader = BaseLoader(USER, PASSWORD, HOST, DATABASE, PORT)
 
 from .main import TableLoader

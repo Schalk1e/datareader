@@ -36,8 +36,31 @@ columns = 3
 df = text_parser.TextParser("path/to/file/file.txt").to_dataframe(delimiter, columns)
 ```
 
-# TO-DO
+## loading data
 
-* Load results to postgreSQL DB. 
-* Tests for loader. 
+To load data from a dataframe into a postgreSQL table, all the required variables are read from the environment upon instantiation of the `TableLoader` class. 
+
+```
+export "DATAREADER_DB_USERNAME"=<>
+export "DATAREADER_DB_PASSWORD"=<>
+export "DATAREADER_DB_NAME"=<>
+# Optional 
+export "DATAREADER_DB_HOST"=<> # Defaults to localhost.
+export "DATAREADER_DB_PORT"=<> # Defaults to 5432.
+```
+
+In session.
+
+```
+from datareader.loader import TableLoader
+
+df = pd.DataFrame({'a' : [1,2,3], 'b' : [1,2,3]})
+
+
+tl = TableLoader()
+"""
+This will write a table named 'test' to the database.
+tl.load_table("test", df)
+"""
+```
 

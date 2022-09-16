@@ -1,6 +1,4 @@
-from . import loader
+from . import base_loader
 from .loader import Loader
 
-
-class TableLoader:
-    loader = Loader(loader)
+TableLoader = Loader(base_loader)

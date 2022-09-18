@@ -15,4 +15,4 @@ class Loader:
         Returns:
             None
         """
-        table.to_sql(table_name, self._loader.engine())
+        table.to_sql(table_name, self._loader.engine(), index=False)

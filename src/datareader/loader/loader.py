@@ -1,9 +1,11 @@
 from pandas import DataFrame
 
+from attrs import define
 
+
+@define
 class Loader:
-    def __init__(self, loader) -> None:
-        self._loader = loader
+    _loader = loader
 
     def load_table(self, table_name: str, table: DataFrame) -> None:
         """Loads a pandas dataframe object to a postgreSQL database table.

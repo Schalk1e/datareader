@@ -2,40 +2,13 @@ import os
 
 from sqlalchemy import create_engine
 
+from config import config_from_env
 
-class ConfigMissingError(Exception):
-    pass
-
-
-try:
-    USER = os.environ["DATAREADER_DB_USERNAME"]
-    PASSWORD = os.environ["DATAREADER_DB_PASSWORD"]
-    DATABASE = os.environ["DATAREADER_DB_NAME"]
-except KeyError:
-    raise ConfigMissingError(
-        "A configuration parameter is missing from the environment (Database user, password or db name). Please ensure these are defined!"
-    )
-
-try:
-    PORT = os.environ["DATAREADER_DB_PORT"]
-except KeyError:
-    print(
-        "Setting port to default pgsql port 5432. If this is not the correct port, add DATAREADER_DB_PORT to the environment variables."
-    )
-    PORT = 5432
-
-try:
-    HOST = os.environ["DATAREADER_DB_HOST"]
-except KeyError:
-    print(
-        "Setting host to localhost. If this is not the correct host, add DATAREADER_DB_HOST to the environment variables."
-    )
-    HOST = "localhost"
-
-if not all([USER, PASSWORD, DATABASE]):
-    raise ConfigMissingError(
-        "A configuration parameter is missing from the environment (Database user, password or db name). Please ensure these are defined!"
-    )
+USER = config_from_env("USER")
+PASSWORD = config_from_env("PASSWORD")
+DATABASE = config_from_env("DATABASE")
+PORT = config_from_env("PORT", default="5432")
+HOST = config_from_env("HOST", default="localhost")
 
 
 class BaseLoader:

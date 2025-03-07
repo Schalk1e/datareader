@@ -1,3 +1,4 @@
+from attrs import define, field
 import os
 import re
 
@@ -59,9 +60,13 @@ def first_words(input_list: list) -> list:
     return [x.strip().split(" ")[0] for x in input_list]
 
 
+@define
 class SQLParser(Parser):
-    def __init__(self, path: os.PathLike) -> None:
-        with open(path) as f:
+    _path: os.PathLike
+    _file: field(init=False)
+
+    def __attrs_post_init__(self):
+        with open(self._path) as f:
             self._file = f.readlines()
 
     def to_dataframe(self) -> pd.DataFrame:

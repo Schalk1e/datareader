@@ -17,7 +17,7 @@ def extract_bracket(input_string: str) -> str:
     """
     if input_string == "":
         return input_string
-    match_object = re.search("\((.*)\)", input_string)
+    match_object = re.search(r"\((.*)\)", input_string)
     if match_object:
         return match_object.group(1)
     return ""
@@ -61,7 +61,7 @@ def first_words(input_list: list) -> list:
 
 class SQLParser(Parser):
     def __init__(self, path: os.PathLike) -> None:
-        with open(path, "r") as f:
+        with open(path) as f:
             self._file = f.readlines()
 
     def to_dataframe(self) -> pd.DataFrame:

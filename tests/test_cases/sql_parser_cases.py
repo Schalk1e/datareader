@@ -82,8 +82,6 @@ class ParserTestCases(Tests):
             "cases": self._files,
             "results": len(self._files)
             * [
-                pd.DataFrame(
-                    {"name": ["'John'", "'Lyla'"], "year": ["2003", "1994"]}
-                ),
+                pd.DataFrame({"name": ["'John'", "'Lyla'"], "year": ["2003", "1994"]}),
             ],
         }

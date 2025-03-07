@@ -7,7 +7,7 @@ from . import Parser
 
 class TextParser(Parser):
     def __init__(self, path: os.PathLike) -> None:
-        with open(path, "r") as f:
+        with open(path) as f:
             self._file = f.readlines()
 
     def to_dataframe(self, delimiter: str, columns: int) -> pd.DataFrame:

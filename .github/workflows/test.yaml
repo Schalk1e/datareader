@@ -1,0 +1,34 @@
+---
+name: test
+
+on: [push]  # yamllint disable-line rule:truthy
+
+jobs:
+  # shellcheck .ci/*.sh
+  shellcheck:
+    name: shellcheck
+    runs-on: ubuntu-latest
+    s
+  testing:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: set up py10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: install pipx
+        run: |
+          sudo apt update
+          sudo apt install pipx
+          pipx ensurepath
+          sudo pipx ensurepath --global
+      - name: install poetry
+        run: |
+          pipx install poetry
+      - name: install packages
+        run: |
+          poetry install
+      - name: test with pytest
+        run: |
+          poetry run pytest

@@ -62,11 +62,11 @@ def first_words(input_list: list) -> list:
 
 @define
 class SQLParser(Parser):
-    _path: os.PathLike
-    _file: field(init=False)
+    path: os.PathLike
+    _file: str = field(init=False)
 
     def __attrs_post_init__(self):
-        with open(self._path) as f:
+        with open(self.path, "r", encoding="utf-8") as f:
             self._file = f.readlines()
 
     def to_dataframe(self) -> pd.DataFrame:

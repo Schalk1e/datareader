@@ -8,11 +8,11 @@ from attrs import define, field
 
 @define
 class TextParser(Parser):
-    _path: os.PathLike
-    _file: field(init=False)
+    path: os.PathLike
+    _file: str = field(init=False)
 
     def __attrs_post_init__(self):
-        with open(self._path) as f:
+        with open(self.path) as f:
             self._file = f.readlines()
 
     def to_dataframe(self, delimiter: str, columns: int) -> pd.DataFrame:

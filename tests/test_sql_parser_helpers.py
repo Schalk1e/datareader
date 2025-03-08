@@ -4,49 +4,17 @@ from datareader.parser.sql_parser import (
     split_list,
 )
 
-import pytest
-from dataclasses import dataclass
-
-
-@dataclass
-class TestCase:
-    input_value: str
-    output_value: str
-
-
-@pytest.fixture
-def test_extract_bracket_cases():
-    return [
-        TestCase(input_value="(s)", output_value="s"),
-        TestCase(input_value="( s )", output_value=" s "),
-        TestCase(input_value="((s))", output_value="(s)"),
-        TestCase(input_value="((s)", output_value="(s"),
-        TestCase(input_value="(s", output_value=""),
-        TestCase(input_value="s)", output_value=""),
-        TestCase(input_value="(((((s)))))", output_value="((((s))))"),
-        TestCase(input_value="s", output_value=""),
-        TestCase(input_value="", output_value=""),
-    ]
-
-
-@pytest.fixture
-def test_first_words_cases():
-    return []
-
-
-@pytest.fixture
-def test_split_list_cases():
-    return []
-
 
 def test_extract_bracket(test_extract_bracket_cases):
     for case in test_extract_bracket_cases:
         assert extract_bracket(case.input_value) == case.output_value
 
 
-def test_first_words():
-    assert True
+def test_first_words(test_first_words_cases):
+    for case in test_first_words_cases:
+        assert first_words(case.input_value) == case.output_value
 
 
-def test_split_list():
-    assert True
+def test_split_list(test_split_list_cases):
+    for case in test_split_list_cases:
+        assert split_list(case.input_value[0], case.input_value[1]) == case.output_value

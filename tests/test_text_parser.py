@@ -1,14 +1,16 @@
-from test_cases.text_parser_cases import TextTestCases
+from pandas.testing import assert_frame_equal
 
-from datareader.parser import text_parser
+import os
+from datareader.parser.text_parser import TextParser
+
+import pytest
+from pathlib import Path
+
+sqldir = Path(__file__).parent / "data" / "text"
 
 
-# def test_to_dataframe():
-#     test_cases = TextTestCases("tests/test_cases/data/text/").to_dataframe_cases()
-#     for case, result in zip(test_cases["cases"], test_cases["results"], strict=False):
-#         assert (
-#             text_parser.TextParser(case)
-#             .to_dataframe("|", 3)
-#             .astype(str)
-#             .equals(result.astype(str))
-#         )
+@pytest.mark.parametrize("file", os.listdir(sqldir))
+def test_text_parser_dataframe_result(file, text_parser_dataframe_result):
+    parser = TextParser(path=os.path.join(sqldir, file))
+
+    assert_frame_equal(parser.to_dataframe("|", 3), text_parser_dataframe_result)

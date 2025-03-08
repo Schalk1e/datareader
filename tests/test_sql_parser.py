@@ -1,12 +1,16 @@
-from datareader.parser.sql_parser import (
-    SQLParser,
-    extract_bracket,
-    split_list,
-    first_words,
-)
+from pandas.testing import assert_frame_equal
 
-# def test_to_dataframe(test_to_dataframe_cases):
-#     for case in test_to_dataframe_cases:
-#         assert (
-#             SQLParser(case.input_value).to_dataframe().astype(str) == case.output_value
-#         )
+import os
+from datareader.parser.sql_parser import SQLParser
+
+import pytest
+from pathlib import Path
+
+sqldir = Path(__file__).parent / "data" / "sql"
+
+
+@pytest.mark.parametrize("file", os.listdir(sqldir))
+def test_sql_parser_dataframe_result(file, sql_parser_dataframe_result):
+    parser = SQLParser(path=os.path.join(sqldir, file))
+
+    assert_frame_equal(parser.to_dataframe(), sql_parser_dataframe_result)

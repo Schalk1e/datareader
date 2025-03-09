@@ -1,10 +1,10 @@
-from attrs import define, field
-import os
 import re
+from typing import Any
 
+from attrs import define, field
 from pandas import DataFrame
 
-from . import Parser
+from .parser_abc import Parser
 
 
 def _bracket_extract(input_string: str) -> str:
@@ -22,7 +22,7 @@ def _bracket_extract(input_string: str) -> str:
     return ""
 
 
-def _list_split(input_list: list, n: int) -> list:
+def _list_split(input_list: list[Any], n: int) -> list[Any]:
     """Splits an input list into individual lists of size n and remainder.
 
     Args:
@@ -35,7 +35,7 @@ def _list_split(input_list: list, n: int) -> list:
     return [input_list[i : i + n] for i in range(0, len(input_list), n)]
 
 
-def _get_first_words(input_list: list) -> list:
+def _get_first_words(input_list: list[str]) -> list[str]:
     """Finds the first words delimited with a space in a list of strings.
 
     Args:
@@ -49,15 +49,16 @@ def _get_first_words(input_list: list) -> list:
 
 @define
 class SQLParser(Parser):
-    path: os.PathLike
-    _file: str = field(init=False)
+    path: str
+    _file: list[str] = field(init=False)
 
     def __attrs_post_init__(self):
-        with open(self.path, "r", encoding="utf-8") as f:
+        with open(self.path, encoding="utf-8") as f:
             self._file = f.readlines()
 
     def to_dataframe(self) -> DataFrame:
-        """Parses input SQL Create and Insert statements and constructs a Pandas DataFrame.
+        """Parses input SQL Create and Insert statements and constructs a
+        Pandas DataFrame.
 
         Returns:
             A Pandas DataFrame.

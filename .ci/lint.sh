@@ -10,7 +10,7 @@ lint() {
     failed=0
 
     black --check "$@" || failed=1
-    mypy --explicit-package-bases "$@" || failed=1
+    mypy "$@" || failed=1
     ruff check "$@" || failed=1
     return $failed
 }

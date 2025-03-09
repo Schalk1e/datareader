@@ -1,6 +1,7 @@
-from pandas import DataFrame
-import pytest
 from dataclasses import dataclass
+
+import pytest
+from pandas import DataFrame
 
 
 @dataclass
@@ -11,14 +12,14 @@ class BracketTestCase:
 
 @dataclass
 class SplitListTestCase:
-    input_value: tuple
-    output_value: list
+    input_value: tuple[list[int], int]
+    output_value: list[list[int]]
 
 
 @dataclass
 class FirstWordsTestCase:
-    input_value: list
-    output_value: list
+    input_value: list[str]
+    output_value: list[str]
 
 
 @pytest.fixture

@@ -1,8 +1,6 @@
-import os
-
 from sqlalchemy import create_engine
 
-from config import config_from_env
+from .config import config_from_env
 
 USER = config_from_env("USER")
 PASSWORD = config_from_env("PASSWORD")
@@ -19,6 +17,6 @@ class BaseLoader:
         return create_engine(self._connect_str)
 
 
-base_loader = BaseLoader(USER, PASSWORD, HOST, DATABASE, PORT)
+base_loader: BaseLoader = BaseLoader(USER, PASSWORD, HOST, DATABASE, PORT)
 
-from .main import TableLoader
+from .main import TableLoader as TableLoader

@@ -3,6 +3,7 @@ name = "datareader"
 version = "0.1.0"
 description = "A simple utility package for reading input data from text into a Python session or PostgreSQL database."
 readme = "README.md"
+packages = [{include = "datareader", from = "src"}]
 authors = [
     { email = "sv973005@gmail.com" }
 ]
@@ -62,5 +63,7 @@ select = [
     "PTH",         # flake8-use-pathlib
 ]
 ignore = [
-    "E402",   # Example: src/api/flow_results/__init__.py:80:0
+    "E402",   # For example: src/datareader/loader/__init__.py
+    "S101",   # We don't use `python -o`, so `assert` is safe.
+    "PTH123", # Worth considering, but involves updates in some other places to keep mypy happy.
 ]

@@ -68,3 +68,7 @@ This will write a table named 'test' to the database.
 tl.load_table("test", df)
 """
 ```
+
+## todo
+
+Right now, we don't have any solid input validation in place. This is the logical next addition.

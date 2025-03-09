@@ -1,7 +1,15 @@
+import os
 from dataclasses import dataclass
+from unittest import mock
 
 import pytest
 from pandas import DataFrame
+
+# We look for some env vars on import. Let's set them for now and come back to
+# this later.
+os.environ["USER"] = "TEST_USER"
+os.environ["PASSWORD"] = "TEST_PASS"  # noqa
+os.environ["DATABASE"] = "TEST_DB"
 
 
 @dataclass
@@ -81,3 +89,14 @@ def text_parser_dataframe_result():
             "c": ["3", "3"],
         }
     )
+
+
+@pytest.fixture()
+def setenvvar(monkeypatch):
+    with mock.patch.dict(os.environ, clear=True):
+        envvars = {
+            "TEST_STRING": "test_string",
+        }
+        for k, v in envvars.items():
+            monkeypatch.setenv(k, v)
+        yield

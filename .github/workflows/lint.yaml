@@ -1,31 +1,34 @@
 ---
 name: lint
 
-on: [push, pull_request]
+on: [push, pull_request]  # yamllint disable-line rule:truthy
 
 jobs:
-  isort-lint:
+  # shellcheck .ci/*.sh
+  shellcheck:
+    name: shellcheck
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
-        with:
-          python-version: 3.8
-      - uses: jamescurtin/isort-action@master
-  black-lint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: psf/black@stable
-        with:
-          options: "-l79"
+      - uses: actions/checkout@v4
+      - name: Run ShellCheck
+        uses: ludeeus/action-shellcheck@2.0.0
+  # yamllint .
   yamllint:
     runs-on: ubuntu-latest
     steps:
       - uses: karancode/yamllint-github-action@master
-  flake8:
+  app_lint:
     runs-on: ubuntu-latest
     steps:
-      - run: |
-          sudo apt-get install -y flake8
-          flake8 . --count --show-source --statistics --config=.flake8.cfg
+      - uses: actions/checkout@v4
+      - name: set up py12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: astral-sh/setup-uv@v3
+      - name: install dev packages
+        run: |
+          uv sync --dev
+      - name: run linters
+        run: |
+          uv run .ci/lint.sh

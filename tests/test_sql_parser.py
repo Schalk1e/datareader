@@ -1,16 +1,17 @@
-from test_cases.sql_parser_cases import ParserTestCases
+import os
+from pathlib import Path
 
-from datareader.parser import sql_parser
+import pytest
+from pandas.testing import assert_frame_equal
+
+from datareader.parser.sql_parser import SQLParser
+
+sqldir = Path(__file__).parent / "data" / "sql"
 
 
-def test_to_dataframe():
-    test_cases = ParserTestCases(
-        "tests/test_cases/data/sql/"
-    ).to_dataframe_cases()
-    for case, result in zip(test_cases["cases"], test_cases["results"]):
-        assert (
-            sql_parser.SQLParser(case)
-            .to_dataframe()
-            .astype(str)
-            .equals(result.astype(str))
-        )
+@pytest.mark.parametrize("file", os.listdir(sqldir))
+def test_sql_parser_dataframe_result(file, sql_parser_dataframe_result):
+    path = sqldir / file
+    parser = SQLParser(path)
+
+    assert_frame_equal(parser.to_dataframe(), sql_parser_dataframe_result)

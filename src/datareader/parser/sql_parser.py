@@ -1,12 +1,13 @@
-import os
 import re
+from typing import Any
 
-import pandas as pd
+from attrs import define, field
+from pandas import DataFrame
 
-from . import Parser
+from .parser_abc import Parser
 
 
-def extract_bracket(input_string: str) -> str:
+def _bracket_extract(input_string: str) -> str:
     """Extracts text between (outermost) brackets rounded brackets.
 
     Args:
@@ -15,15 +16,13 @@ def extract_bracket(input_string: str) -> str:
     Returns:
         The text within the outermost brackets.
     """
-    if input_string == "":
-        return input_string
-    match_object = re.search("\((.*)\)", input_string)
+    match_object = re.search(r"\((.*)\)", input_string)
     if match_object:
         return match_object.group(1)
     return ""
 
 
-def split_list(input_string: list, n: int) -> list:
+def _list_split(input_list: list[Any], n: int) -> list[Any]:
     """Splits an input list into individual lists of size n and remainder.
 
     Args:
@@ -33,21 +32,10 @@ def split_list(input_string: list, n: int) -> list:
     Returns:
         A list of split lists.
     """
-    iterations = len(input_string) // n
-    splitlist = []
-    i = 0
-    while i < iterations:
-        to_append = input_string[n * i : n * (i + 1)]
-        if to_append:
-            splitlist.append(to_append)
-        i += 1
-    dmod = len(input_string) % n
-    if dmod != 0:
-        splitlist.append(input_string[-dmod:])
-    return splitlist
+    return [input_list[i : i + n] for i in range(0, len(input_list), n)]
 
 
-def first_words(input_list: list) -> list:
+def _get_first_words(input_list: list[str]) -> list[str]:
     """Finds the first words delimited with a space in a list of strings.
 
     Args:
@@ -59,27 +47,37 @@ def first_words(input_list: list) -> list:
     return [x.strip().split(" ")[0] for x in input_list]
 
 
+@define
 class SQLParser(Parser):
-    def __init__(self, path: os.PathLike) -> None:
-        with open(path, "r") as f:
+    path: str
+    _file: list[str] = field(init=False)
+
+    def __attrs_post_init__(self):
+        with open(self.path, encoding="utf-8") as f:
             self._file = f.readlines()
 
-    def to_dataframe(self) -> pd.DataFrame:
-        """Parses input SQL Create and Insert statements and constructs a Pandas DataFrame.
+    def to_dataframe(self) -> DataFrame:
+        """Parses input SQL Create and Insert statements and constructs a
+        Pandas DataFrame.
 
         Returns:
             A Pandas DataFrame.
         """
-        # add unique constraint option.
         tbl = []
-        q = " ".join([x.strip("\n") for x in self._file]).split(";")
-        for x in q:
-            b = extract_bracket(x).replace("(", "").replace(")", "")
-            if b != "":
-                to_append = b.strip().split(",")
-                tbl.append([y.strip() for y in to_append if y != ""])
+        sql_stmts = " ".join([x.strip("\n") for x in self._file]).split(";")
+
+        for stmt in sql_stmts:
+            # How robust is this function to formatting changes?
+            # Why is this necessary? Quite messy.
+            inside_brackets = _bracket_extract(stmt).replace("(", "").replace(")", "")
+            if inside_brackets != "":
+                tbl.append(
+                    [x.strip() for x in inside_brackets.strip().split(",") if x != ""]
+                )
+
         if len(tbl) == 2:
-            tbl = [tbl[0]] + split_list(tbl[1], len(tbl[0]))
-        cols = first_words(tbl[0])
-        df = pd.DataFrame(tbl[1:], columns=cols)
-        return df
+            tbl = [tbl[0]] + _list_split(tbl[1], len(tbl[0]))
+
+        columns = _get_first_words(tbl[0])
+
+        return DataFrame(tbl[1:], columns=columns)

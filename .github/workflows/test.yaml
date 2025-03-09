@@ -1,0 +1,21 @@
+---
+name: test
+
+on: [push]  # yamllint disable-line rule:truthy
+
+jobs:
+  testing:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: set up py10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: astral-sh/setup-uv@v3
+      - name: install dev packages
+        run: |
+          uv sync --dev
+      - name: run tests
+        run: |
+          uv run pytest

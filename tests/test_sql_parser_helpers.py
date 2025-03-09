@@ -1,29 +1,22 @@
-from test_cases.sql_parser_cases import (
-    extract_bracket_cases,
-    first_words_cases,
-    split_list_cases,
-)
-
 from datareader.parser.sql_parser import (
-    extract_bracket,
-    first_words,
-    split_list,
+    _bracket_extract,
+    _get_first_words,
+    _list_split,
 )
 
 
-def test_extract_bracket():
-    test_cases = extract_bracket_cases()
-    for case, result in zip(test_cases["cases"], test_cases["results"]):
-        assert extract_bracket(case) == result
+def test__bracket_extract(test_bracket_extract_cases):
+    for case in test_bracket_extract_cases:
+        assert _bracket_extract(case.input_value) == case.output_value
 
 
-def test_split_list():
-    test_cases = split_list_cases()
-    for case, result in zip(test_cases["cases"], test_cases["results"]):
-        assert split_list(case[0], case[1]) == result
+def test_first_words(test_get_first_words_cases):
+    for case in test_get_first_words_cases:
+        assert _get_first_words(case.input_value) == case.output_value
 
 
-def test_first_words():
-    test_cases = first_words_cases()
-    for case, result in zip(test_cases["cases"], test_cases["results"]):
-        assert first_words(case) == result
+def test_split_list(test_list_split_cases):
+    for case in test_list_split_cases:
+        assert (
+            _list_split(case.input_value[0], case.input_value[1]) == case.output_value
+        )

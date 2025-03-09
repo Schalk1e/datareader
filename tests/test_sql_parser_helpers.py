@@ -5,7 +5,7 @@ from datareader.parser.sql_parser import (
 )
 
 
-def test__bracket_extract(test_bracket_extract_cases):
+def test_bracket_extract(test_bracket_extract_cases):
     for case in test_bracket_extract_cases:
         assert _bracket_extract(case.input_value) == case.output_value
 

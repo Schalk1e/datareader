@@ -71,4 +71,5 @@ tl.load_table("test", df)
 
 ## todo
 
-Right now, we don't have any solid input validation in place. This is the logical next addition.
+- Right now, we don't have any solid input validation in place. This is the logical next addition.
+- Use polars instead of pandas.

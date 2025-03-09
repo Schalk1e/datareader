@@ -1,20 +1,22 @@
 from datareader.parser.sql_parser import (
-    extract_bracket,
-    first_words,
-    split_list,
+    _bracket_extract,
+    _get_first_words,
+    _list_split,
 )
 
 
-def test_extract_bracket(test_extract_bracket_cases):
-    for case in test_extract_bracket_cases:
-        assert extract_bracket(case.input_value) == case.output_value
+def test__bracket_extract(test_bracket_extract_cases):
+    for case in test_bracket_extract_cases:
+        assert _bracket_extract(case.input_value) == case.output_value
 
 
-def test_first_words(test_first_words_cases):
-    for case in test_first_words_cases:
-        assert first_words(case.input_value) == case.output_value
+def test_first_words(test_get_first_words_cases):
+    for case in test_get_first_words_cases:
+        assert _get_first_words(case.input_value) == case.output_value
 
 
-def test_split_list(test_split_list_cases):
-    for case in test_split_list_cases:
-        assert split_list(case.input_value[0], case.input_value[1]) == case.output_value
+def test_split_list(test_list_split_cases):
+    for case in test_list_split_cases:
+        assert (
+            _list_split(case.input_value[0], case.input_value[1]) == case.output_value
+        )

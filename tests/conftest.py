@@ -22,7 +22,7 @@ class FirstWordsTestCase:
 
 
 @pytest.fixture
-def test_extract_bracket_cases():
+def test_bracket_extract_cases():
     return [
         BracketTestCase(input_value="(s)", output_value="s"),
         BracketTestCase(input_value="( s )", output_value=" s "),
@@ -37,7 +37,7 @@ def test_extract_bracket_cases():
 
 
 @pytest.fixture
-def test_split_list_cases():
+def test_list_split_cases():
     return [
         SplitListTestCase(
             input_value=([1, 2, 3, 4], 1), output_value=[[1], [2], [3], [4]]
@@ -52,7 +52,7 @@ def test_split_list_cases():
 
 
 @pytest.fixture
-def test_first_words_cases():
+def test_get_first_words_cases():
     return [
         FirstWordsTestCase(
             input_value=["a b", "b c", "c d"], output_value=["a", "b", "c"]

@@ -6,12 +6,14 @@
   <p>
     <img src="https://github.com/Schalk1e/datareader/workflows/lint/badge.svg" width="120"/>
     <img src="https://github.com/Schalk1e/datareader/workflows/test/badge.svg" width="120"/>
-    <img src="https://img.shields.io/badge/version-0.1.0.dev0-orange" width="145"/>
+    <img src="https://img.shields.io/badge/version-0.1.0-orange" width="145"/>
     <img src="/docs/images/coverage.svg" width="125"/>
   </p>
 </div>
 
-A simple utility package for reading input data from text into a Python session or PostgreSQL database. I wrote this with the specific intention of making my Toptal interviews less stressful while addressing my very specific idiosyncratic needs :) As of my previous round of interviews it no longer serves much practical purpose other than being an example of how I solve problems in Python.
+A simple utility package for reading input data from text into a Python session or PostgreSQL database. I wrote this with the specific intention of making my Toptal interviews less stressful while addressing my very specific idiosyncratic needs.
+
+As of my previous round of interviews it no longer serves much practical purpose other than being an example of how I solve problems in Python.
 
 # usage
 

@@ -1,5 +1,5 @@
 from attrs import define
-from pandas import DataFrame
+from polars import DataFrame
 
 from . import BaseLoader
 
@@ -18,4 +18,5 @@ class Loader:
         Returns:
             None
         """
-        table.to_sql(table_name, self._loader.engine(), index=False)
+        # Perhaps one glorious day, sqlalchemy will support polars natively.
+        table.to_pandas().to_sql(table_name, self._loader.engine(), index=False)

@@ -1,9 +1,10 @@
 import os
 from dataclasses import dataclass
+from typing import Any
 from unittest import mock
 
 import pytest
-from pandas import DataFrame
+from polars import DataFrame
 
 # We look for some env vars on import. Let's set them for now and come back to
 # this later.
@@ -28,6 +29,12 @@ class SplitListTestCase:
 class FirstWordsTestCase:
     input_value: list[str]
     output_value: list[str]
+
+
+@dataclass
+class BuildDictTestCase:
+    input_value: tuple[list[list[Any]], list[str]]
+    output_value: dict[str, list[Any]]
 
 
 @pytest.fixture
@@ -72,6 +79,16 @@ def test_get_first_words_cases():
         FirstWordsTestCase(input_value=["a b c"], output_value=["a"]),
         FirstWordsTestCase(input_value=["a b c", "b c d"], output_value=["a", "b"]),
         FirstWordsTestCase(input_value=["abc"], output_value=["abc"]),
+    ]
+
+
+@pytest.fixture
+def test_build_df_dict_cases():
+    return [
+        BuildDictTestCase(
+            input_value=([[1, 2, 3], [1, 2, 3]], ["a", "b", "c"]),
+            output_value={"a": [1, 1], "b": [2, 2], "c": [3, 3]},
+        ),
     ]
 
 

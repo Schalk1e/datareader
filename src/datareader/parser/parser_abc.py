@@ -1,9 +1,9 @@
 from abc import ABC, abstractmethod
 
-import pandas as pd
+from polars import DataFrame
 
 
 class Parser(ABC):
     @abstractmethod
-    def to_dataframe(self, *kwargs) -> pd.DataFrame:
+    def to_dataframe(self, *kwargs) -> DataFrame:
         pass

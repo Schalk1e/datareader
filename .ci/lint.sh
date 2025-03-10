@@ -15,7 +15,7 @@ lint() {
     return $failed
 }
 
-lint tests/ src/
+lint tests/ src/ examples/
 result=$?
 
 if [ $result = 0 ]; then

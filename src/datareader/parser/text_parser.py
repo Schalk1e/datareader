@@ -1,7 +1,9 @@
 from pathlib import Path
 
 from attrs import define, field
-from pandas import DataFrame
+from polars import DataFrame
+
+from datareader.helpers import _build_df_dict
 
 from .parser_abc import Parser
 
@@ -31,4 +33,4 @@ class TextParser(Parser):
 
         headers = tbl.pop(0)
 
-        return DataFrame(tbl, columns=headers)
+        return DataFrame(_build_df_dict(tbl, headers=headers))

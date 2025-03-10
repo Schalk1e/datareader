@@ -3,7 +3,9 @@ from pathlib import Path
 from typing import Any
 
 from attrs import define, field
-from pandas import DataFrame
+from polars import DataFrame
+
+from datareader.helpers import _build_df_dict
 
 from .parser_abc import Parser
 
@@ -68,8 +70,6 @@ class SQLParser(Parser):
         sql_stmts = " ".join([x.strip("\n") for x in self._file]).split(";")
 
         for stmt in sql_stmts:
-            # How robust is this function to formatting changes?
-            # Why is this necessary? Quite messy.
             inside_brackets = _bracket_extract(stmt).replace("(", "").replace(")", "")
             if inside_brackets != "":
                 tbl.append(
@@ -79,6 +79,6 @@ class SQLParser(Parser):
         if len(tbl) == 2:
             tbl = [tbl[0]] + _list_split(tbl[1], len(tbl[0]))
 
-        columns = _get_first_words(tbl[0])
+        headers = _get_first_words(tbl[0])
 
-        return DataFrame(tbl[1:], columns=columns)
+        return DataFrame(_build_df_dict(tbl[1:], headers=headers))

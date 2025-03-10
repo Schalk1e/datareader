@@ -1,4 +1,4 @@
-from pandas import DataFrame
+from polars import DataFrame
 
 from datareader.loader import TableLoader
 

@@ -7,9 +7,9 @@ from pandas import DataFrame
 
 # We look for some env vars on import. Let's set them for now and come back to
 # this later.
-os.environ["USER"] = "TEST_USER"
-os.environ["PASSWORD"] = "TEST_PASS"  # noqa
-os.environ["DATABASE"] = "TEST_DB"
+os.environ["DATAREADER_PG_USER"] = "TEST_USER"
+os.environ["DATAREADER_PG_PASSWORD"] = "TEST_PASS"  # noqa
+os.environ["DATAREADER_PG_DATABASE"] = "TEST_DB"
 
 
 @dataclass

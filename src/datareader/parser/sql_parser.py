@@ -1,4 +1,5 @@
 import re
+from pathlib import Path
 from typing import Any
 
 from attrs import define, field
@@ -49,7 +50,7 @@ def _get_first_words(input_list: list[str]) -> list[str]:
 
 @define
 class SQLParser(Parser):
-    path: str
+    path: Path
     _file: list[str] = field(init=False)
 
     def __attrs_post_init__(self):

@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from attrs import define, field
 from pandas import DataFrame
 
@@ -6,7 +8,7 @@ from .parser_abc import Parser
 
 @define
 class TextParser(Parser):
-    path: str
+    path: Path
     _file: list[str] = field(init=False)
 
     def __attrs_post_init__(self):

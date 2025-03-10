@@ -2,11 +2,11 @@ from sqlalchemy import create_engine
 
 from .config import config_from_env
 
-USER = config_from_env("USER")
-PASSWORD = config_from_env("PASSWORD")
-DATABASE = config_from_env("DATABASE")
-PORT = config_from_env("PORT", default="5432")
-HOST = config_from_env("HOST", default="localhost")
+USER = config_from_env("DATAREADER_PG_USER")
+PASSWORD = config_from_env("DATAREADER_PG_PASSWORD")
+DATABASE = config_from_env("DATAREADER_PG_DATABASE")
+PORT = config_from_env("DATAREADER_PG_PORT", default="5432")
+HOST = config_from_env("DATAREADER_PG_HOST", default="localhost")
 
 
 class BaseLoader:

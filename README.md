@@ -7,7 +7,7 @@
     <img src="https://github.com/Schalk1e/datareader/workflows/lint/badge.svg" width="120"/>
     <img src="https://github.com/Schalk1e/datareader/workflows/test/badge.svg" width="120"/>
     <img src="https://img.shields.io/badge/version-0.1.0-orange" width="110"/>
-    <img src="https://img.shields.io/badge/license-MIT-blue" width="110"/>
+    <img src="https://img.shields.io/badge/license-MIT-blue" width="100"/>
     <img src="/docs/images/coverage.svg" width="125"/>
   </p>
 </div>

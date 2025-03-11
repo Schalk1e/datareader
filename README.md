@@ -1,5 +1,5 @@
 <h1 align="center">
-  :octocat: datareader
+  datareader
 </h1>
 
 <div align="center">

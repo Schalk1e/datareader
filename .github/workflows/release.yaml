@@ -1,0 +1,35 @@
+---
+name: release
+on:  # yamllint disable-line rule:truthy
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  release:
+    name: release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: set up py12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: install pipx
+        run: |
+          sudo apt update
+          sudo apt install pipx
+          pipx ensurepath
+          sudo pipx ensurepath --global
+      - name: install uv
+        run: |
+          pipx install uv
+      - name: build release artifacts
+        run: |
+          uv build
+      - name: create release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

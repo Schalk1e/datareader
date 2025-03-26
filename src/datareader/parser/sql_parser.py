@@ -75,7 +75,7 @@ class SQLParser(Parser):
             for x in sql_stmts
         )
 
-        tbl = [
+        tbl_data = [
             item
             for stmt in inside_brackets
             # Filter out any "" which we sometimes get. Ensure whitespace is
@@ -83,7 +83,7 @@ class SQLParser(Parser):
             for item in filter(None, (x.strip() for x in stmt.split(",")))
         ]
 
-        tbl = [tbl[:columns], *_list_split(tbl[columns:], columns)]
+        tbl = [tbl_data[:columns], *_list_split(tbl_data[columns:], columns)]
         headers = _get_first_words(tbl[0])
 
         # First list element is the header list.

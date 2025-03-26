@@ -59,26 +59,33 @@ class SQLParser(Parser):
         with open(self.path, encoding="utf-8") as f:
             self._file = f.readlines()
 
-    def to_dataframe(self) -> DataFrame:
+    def to_dataframe(self, columns: int) -> DataFrame:
         """Parses input SQL Create and Insert statements and constructs a
         Pandas DataFrame.
 
         Returns:
             A Pandas DataFrame.
         """
-        tbl = []
-        sql_stmts = " ".join([x.strip("\n") for x in self._file]).split(";")
+        sql_stmts = " ".join(x.strip() for x in self._file).split(";")
 
-        for stmt in sql_stmts:
-            inside_brackets = _bracket_extract(stmt).replace("(", "").replace(")", "")
-            if inside_brackets != "":
-                tbl.append(
-                    [x.strip() for x in inside_brackets.strip().split(",") if x != ""]
-                )
+        # We're planning on iterating over this in tbl. No need to store
+        # can use generator exp.
+        inside_brackets = (
+            _bracket_extract(x).translate(str.maketrans("", "", "()"))
+            for x in sql_stmts
+        )
 
-        if len(tbl) == 2:
-            tbl = [tbl[0]] + _list_split(tbl[1], len(tbl[0]))
+        tbl = [
+            item
+            for stmt in inside_brackets
+            # Filter out any "" which we sometimes get. Ensure whitespace is
+            # stripped from each split (on ,) stmt.
+            for item in filter(None, (x.strip() for x in stmt.split(",")))
+        ]
 
+        tbl = [tbl[:columns], *_list_split(tbl[columns:], columns)]
         headers = _get_first_words(tbl[0])
 
+        # First list element is the header list.
+        # _build_df_dict takes data and headers separately.
         return DataFrame(_build_df_dict(tbl[1:], headers=headers))

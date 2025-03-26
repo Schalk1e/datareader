@@ -15,5 +15,5 @@ def test_sql_parser_dataframe_result(file, sql_parser_dataframe_result):
     parser = SQLParser(path)
 
     assert_frame_equal(
-        parser.to_dataframe().to_pandas(), sql_parser_dataframe_result.to_pandas()
+        parser.to_dataframe(2).to_pandas(), sql_parser_dataframe_result.to_pandas()
     )

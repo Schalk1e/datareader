@@ -23,10 +23,12 @@ class TextParser(Parser):
         Returns:
             A Pandas DataFrame.
         """
-        rows = [line.split(delimiter) for line in self._file]
+        rows = (line.split(delimiter) for line in self._file)
         tbl = [
             r
             for row in rows
+            # Can use filter here, but the list comp feels more readable than
+            #  if len(r := list(filter(None, (x.strip() for x in row)))) == columns
             if len(r := [x.strip() for x in row if x.strip()]) == columns
         ]
         headers = tbl.pop(0)

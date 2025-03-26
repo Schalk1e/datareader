@@ -24,13 +24,11 @@ class TextParser(Parser):
             A Pandas DataFrame.
         """
         rows = [line.split(delimiter) for line in self._file]
-
-        tbl = []
-        for row in rows:
-            r = [r.strip() for r in row if r.strip() != ""]
-            if len(r) == columns:
-                tbl.append(r)
-
+        tbl = [
+            r
+            for row in rows
+            if len(r := [x.strip() for x in row if x.strip()]) == columns
+        ]
         headers = tbl.pop(0)
 
         return DataFrame(_build_df_dict(tbl, headers=headers))
